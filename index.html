@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krovav Avangard — Официальный сайт клана</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="logo">#KrovavAvangard</h1>
+      <p class="tagline">Клан. Сила. Единство.</p>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="info">Информация</button>
+    <button class="tab-btn" data-tab="members">Участники</button>
+    <button class="tab-btn" data-tab="ads">Реклама</button>
+    <button class="tab-btn" data-tab="check">Проверка</button>
+  </nav>
+
+  <main class="content">
+
+    <section class="tab-content active" id="info">
+      <h2>О клане</h2>
+      <div class="card">
+        <p>Тут будет информация о клане. Заполни этот раздел позже.</p>
+        <p><strong>Название:</strong> Krovav Avangard</p>
+        <p><strong>Основан:</strong> 2024</p>
+        <p><strong>Игра:</strong> —</p>
+        <p><strong>Девиз:</strong> —</p>
+      </div>
+    </section>
+
+    <section class="tab-content" id="members">
+      <h2>Участники</h2>
+      <div class="card">
+        <p>Список участников клана. Заполни позже.</p>
+        <ul class="members-list">
+          <li><span class="role">Лидер</span> — @nickname</li>
+          <li><span class="role">Заместитель</span> — @nickname</li>
+          <li><span class="role">Участник</span> — @nickname</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="tab-content" id="ads">
+      <h2>Реклама</h2>
+      <div class="card">
+        <p>Условия рекламы. Заполни позже.</p>
+        <p><strong>Контакт:</strong> @nickname</p>
+        <p><strong>Формат:</strong> пост / закреп / упоминание</p>
+        <p><strong>Цена:</strong> по договорённости</p>
+      </div>
+    </section>
+
+    <section class="tab-content" id="check">
+      <h2>Проверка</h2>
+      <div class="card">
+        <p>Ответь на 7 вопросов и выполни 1 задание.</p>
+        <p><strong>Проходной балл: 8 из 10.</strong></p>
+
+        <form id="checkForm" class="quiz">
+
+          <div class="quiz-question">
+            <label>1. Что такое OSINT?</label>
+            <label class="radio"><input type="radio" name="q1" value="a" required> Взлом</label>
+            <label class="radio"><input type="radio" name="q1" value="b"> Оскорбления</label>
+            <label class="radio"><input type="radio" name="q1" value="c"> Поиск по открытым источникам</label>
+            <label class="radio"><input type="radio" name="q1" value="d"> Поиск по закрытым источникам</label>
+          </div>
+
+          <div class="quiz-question">
+            <label>2. OSINT закрытый или открытый вид поиска?</label>
+            <label class="radio"><input type="radio" name="q2" value="a" required> Открытый</label>
+            <label class="radio"><input type="radio" name="q2" value="b"> Закрытый</label>
+            <label class="radio"><input type="radio" name="q2" value="c"> Эта че?</label>
+          </div>
+
+          <div class="quiz-question">
+            <label>3. Сколько ОСНОВНЫХ ветвей в OSINT?</label>
+            <label class="radio"><input type="radio" name="q3" value="a" required> 5</label>
+            <label class="radio"><input type="radio" name="q3" value="b"> 6</label>
+            <label class="radio"><input type="radio" name="q3" value="c"> 4</label>
+            <label class="radio"><input type="radio" name="q3" value="d"> 3</label>
+          </div>
+
+          <div class="quiz-question">
+            <label>4. Ветви и направления — это одно и то же?</label>
+            <label class="radio"><input type="radio" name="q4" value="a" required> Нет</label>
+            <label class="radio"><input type="radio" name="q4" value="b"> Да</label>
+          </div>
+
+          <div class="quiz-question">
+            <label>5. OSINT и OSINT-разведка — это одно и то же?</label>
+            <label class="radio"><input type="radio" name="q5" value="a" required> Да</label>
+            <label class="radio"><input type="radio" name="q5" value="b"> Нет</label>
+          </div>
+
+          <div class="quiz-question">
+            <label>6. Сколько веток в OSINT-разведке?</label>
+            <label class="radio"><input type="radio" name="q6" value="a" required> 50</label>
+            <label class="radio"><input type="radio" name="q6" value="b"> 4</label>
+            <label class="radio"><input type="radio" name="q6" value="c"> 400-500-600</label>
+            <label class="radio"><input type="radio" name="q6" value="d"> 8</label>
+          </div>
+
+          <div class="quiz-question">
+            <label>7. Почему так много веток в OSINT-разведке?</label>
+            <label class="radio"><input type="radio" name="q7" value="a" required> Это всё ветки</label>
+            <label class="radio"><input type="radio" name="q7" value="b"> Придумывают новые</label>
+            <label class="radio"><input type="radio" name="q7" value="c"> У каждой ветки есть поднаправления</label>
+          </div>
+
+          <div class="quiz-question quiz-task">
+            <p class="task-text">📱 Найдите по данному номеру телефона <strong>ФИО</strong> и <strong>ОБЛАСТЬ</strong></p>
+            <p class="task-phone">+79011881940</p>
+            <p class="task-hint">Введите ответ в поля ниже. Формат не важен.</p>
+
+            <label for="taskFio">ФИО</label>
+            <input type="text" id="taskFio" name="taskFio" placeholder="Например: Иванов Иван Иванович" required>
+
+            <label for="taskArea" style="margin-top: 14px;">Область</label>
+            <input type="text" id="taskArea" name="taskArea" placeholder="Например: Московская область" required>
+          </div>
+
+          <button type="submit" class="submit-btn">Проверить результат</button>
+        </form>
+
+        <div id="quizResult" class="quiz-result"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Krovav Avangard. Все права защищены.</p>
+    <p class="credits">Евгений Оксетеров and borz</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+  </html>
