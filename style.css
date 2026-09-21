@@ -474,14 +474,15 @@ body {
 }
 /* ====== MEMBERS LINKS ====== */
 .members-list a {
-  color: #d9c2f0;
+  color: #fff;
   text-decoration: none;
   font-weight: 700;
   font-size: 15px;
   transition: all 0.2s;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: rgba(155, 89, 208, 0.12);
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(155, 89, 208, 0.35);
+  border: 1px solid rgba(155, 89, 208, 0.6);
 }
 
 .members-list a:hover {
