@@ -472,3 +472,30 @@ body {
   color: var(--red);
   text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
 }
+/* ====== MEMBERS LINKS ====== */
+.members-list a {
+  color: var(--purple-bright);
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.members-list a:hover {
+  color: var(--red);
+  text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+.members-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .members-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
