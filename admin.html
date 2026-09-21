@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админ — Krovav Avangard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0a;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(155, 89, 208, 0.2) 0%, transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(231, 76, 60, 0.12) 0%, transparent 45%);
+      background-attachment: fixed;
+      color: #e8e8e8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .admin-box {
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 24px;
+      background: rgba(17, 17, 17, 0.95);
+      border: 1px solid rgba(155, 89, 208, 0.5);
+      border-radius: 12px;
+      box-shadow: 0 0 40px rgba(155, 89, 208, 0.2);
+    }
+    .admin-box h1 {
+      color: #8b0000;
+      text-shadow: 0 0 15px rgba(139, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.4);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 24px;
+      text-align: center;
+    }
+    .admin-input, .admin-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(10, 10, 10, 0.9);
+      border: 1px solid rgba(155, 89, 208, 0.5);
+      border-radius: 8px;
+      color: #e8e8e8;
+      font-size: 15px;
+      font-family: inherit;
+      margin-bottom: 8px;
+    }
+    .admin-input:focus, .admin-textarea:focus {
+      outline: none;
+      border-color: #b566e8;
+      box-shadow: 0 0 15px rgba(155, 89, 208, 0.4);
+    }
+    .admin-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .admin-label {
+      display: block;
+      margin: 20px 0 8px;
+      color: #b566e8;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .admin-btn {
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #9b59d0, #e74c3c);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      margin-top: 16px;
+      font-size: 14px;
+      transition: all 0.2s;
+      width: 100%;
+    }
+    .admin-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(155, 89, 208, 0.5);
+    }
+    .admin-btn.logout {
+      background: #555;
+      width: auto;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+    .admin-status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      display: none;
+      text-align: center;
+    }
+    .admin-status.ok {
+      display: block;
+      background: rgba(46, 204, 113, 0.15);
+      color: #2ecc71;
+      border: 1px solid rgba(46, 204, 113, 0.5);
+    }
+    .admin-status.err {
+      display: block;
+      background: rgba(231, 76, 60, 0.15);
+      color: #e74c3c;
+      border: 1px solid rgba(231, 76, 60, 0.5);
+    }
+    .hidden { display: none !important; }
+    .row { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px dashed rgba(155, 89, 208, 0.3); }
+    .row:last-child { border-bottom: none; }
+    .row-header {
+      color: #8b0000;
+      font-weight: 900;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+      text-shadow: 0 0 8px rgba(139, 0, 0, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-box">
+
+    <div id="loginBlock">
+      <h1>🔒 Вход в админку</h1>
+      <label class="admin-label">Email</label>
+      <input type="email" id="email" class="admin-input" placeholder="admin@example.com">
+      <label class="admin-label">Пароль</label>
+      <input type="password" id="password" class="admin-input" placeholder="••••••••">
+      <button class="admin-btn" onclick="doLogin()">Войти</button>
+      <div id="loginStatus" class="admin-status"></div>
+    </div>
+
+    <div id="editorBlock" class="hidden">
+      <h1>📝 Редактор сайта</h1>
+      <button class="admin-btn logout" onclick="doLogout()">Выйти</button>
+      <div id="rowsContainer"></div>
+      <button class="admin-btn" onclick="saveAll()">💾 Сохранить всё</button>
+      <div id="saveStatus" class="admin-status"></div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://bnkxugykixafzxrctgbs.supabase.co/rest/v1/";
+    const SUPABASE_KEY = "sb_publishable_uF5oRwmW1WUa4cc2Mv-Gfw_7chz4_EB";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const FIELDS = [
+      { key: "info_title", label: "Информация — Заголовок" },
+      { key: "info_content", label: "Информация — Текст", type: "textarea" },
+      { key: "members_title", label: "Участники — Заголовок" },
+      { key: "members_content", label: "Участники — Текст", type: "textarea" },
+      { key: "ads_title", label: "Реклама — Заголовок" },
+      { key: "ads_content", label: "Реклама — Текст", type: "textarea" },
+      { key: "target_step_1", label: "TARGET — Окно 1", type: "textarea" },
+      { key: "target_step_2", label: "TARGET — Окно 2", type: "textarea" },
+      { key: "target_step_3", label: "TARGET — Окно 3", type: "textarea" }
+    ];
+
+    const GROUPS = {
+      "info_title": "📋 Информация",
+      "members_title": "👥 Участники",
+      "ads_title": "📢 Реклама",
+      "target_step_1": "🎯 TARGET"
+    };
+
+    let currentData = {};
+
+    async function init() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        showEditor();
+        await loadAll();
+      }
+    }
+
+    async function doLogin() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const status = document.getElementById("loginStatus");
+      status.className = "admin-status";
+      status.textContent = "";
+
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        status.className = "admin-status err";
+        status.textContent = "❌ " + error.message;
+        return;
+      }
+      status.className = "admin-status ok";
+      status.textContent = "✅ Успешный вход";
+      showEditor();
+      await loadAll();
+    }
+
+    async function doLogout() {
+      await supabase.auth.signOut();
+      location.reload();
+    }
+
+    function showEditor() {
+      document.getElementById("loginBlock").classList.add("hidden");
+      document.getElementById("editorBlock").classList.remove("hidden");
+    }
+
+    async function loadAll() {
+      const { data, error } = await supabase.from("site_content").select("*");
+      if (error) {
+        console.error(error);
+        alert("Ошибка загрузки: " + error.message);
+        return;
+      }
+      currentData = {};
+      data.forEach(row => currentData[row.key] = row.value);
+      renderFields();
+    }
+
+    function renderFields() {
+      const container = document.getElementById("rowsContainer");
+      container.innerHTML = "";
+
+      FIELDS.forEach(f => {
+        const div = document.createElement("div");
+        div.className = "row";
+
+        if (GROUPS[f.key]) {
+          const h = document.createElement("div");
+          h.className = "row-header";
+          h.textContent = GROUPS[f.key];
+          div.appendChild(h);
+        }
+
+        const label = document.createElement("label");
+        label.className = "admin-label";
+        label.textContent = f.label;
+        div.appendChild(label);
+
+        if (f.type === "textarea") {
+          const ta = document.createElement("textarea");
+          ta.className = "admin-textarea";
+          ta.id = "field_" + f.key;
+          ta.value = currentData[f.key] || "";
+          div.appendChild(ta);
+        } else {
+          const inp = document.createElement("input");
+          inp.className = "admin-input";
+          inp.id = "field_" + f.key;
+          inp.value = currentData[f.key] || "";
+          div.appendChild(inp);
+        }
+        container.appendChild(div);
+      });
+    }
+
+    async function saveAll() {
+      const status = document.getElementById("saveStatus");
+      status.className = "admin-status";
+      status.textContent = "";
+
+      for (const f of FIELDS) {
+        const value = document.getElementById("field_" + f.key).value;
+        const { error } = await supabase
+          .from("site_content")
+          .upsert({ key: f.key, value: value, updated_at: new Date().toISOString() }, { onConflict: "key" });
+        if (error) {
+          status.className = "admin-status err";
+          status.textContent = "❌ Ошибка: " + error.message;
+          return;
+        }
+      }
+      status.className = "admin-status ok";
+      status.textContent = "✅ Всё сохранено! Обнови сайт — увидишь изменения.";
+    }
+
+    init();
+  </script>
+</body>
+</html>к
