@@ -448,3 +448,27 @@ body {
     font-size: 20px;
   }
     }
+/* ====== ADS LINKS ====== */
+.ads-links {
+  margin: 20px 0;
+  padding: 16px;
+  background: rgba(155, 89, 208, 0.08);
+  border-left: 4px solid var(--purple-bright);
+  border-radius: 8px;
+}
+
+.ads-links p {
+  margin-bottom: 8px;
+}
+
+.ads-links a {
+  color: var(--purple-bright);
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.ads-links a:hover {
+  color: var(--red);
+  text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
