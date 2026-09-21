@@ -474,15 +474,20 @@ body {
 }
 /* ====== MEMBERS LINKS ====== */
 .members-list a {
-  color: var(--purple-bright);
+  color: #d9c2f0;
   text-decoration: none;
   font-weight: 700;
+  font-size: 15px;
   transition: all 0.2s;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(155, 89, 208, 0.12);
 }
 
 .members-list a:hover {
-  color: var(--red);
-  text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+  color: #fff;
+  background: rgba(155, 89, 208, 0.35);
+  text-shadow: 0 0 10px rgba(155, 89, 208, 0.8);
 }
 
 .members-list li {
